@@ -1,25 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
+struct Book{
+	int number;
+	char title[10];
+};
+
 
 int main(int argc, char *argv[]) {
-	char*pc = NULL;
-	int i = 0;
+	int i;
+	struct Book**bookshelf;
 	
-	pc = (char*)malloc(100*sizeof(char));
-	if (pc == NULL){
-		printf("메모리 할당 오류\n");
-		exit(1);
-	}
+	bookshelf = (struct Book**)malloc(3* sizeof(struct Book*));
+	for (i=0;i<3;i++)
+	 bookshelf[i] = (struct Book*)malloc(10*sizeof(struct Book));
+	 
+	bookshelf[1][3].number = 5;
+	strcpy(bookshelf[1][3].title, "C++ Programming");
 	
-	for(i=0;i<26;i++){
-		pc[i] = 'a'+i;
-	}
+	(bookshelf[2]+4)->number = 3;
+	strcpy((bookshelf[2]+4)->title, "Communications Theory");
 	
-	pc[i]=0;
-	printf("%s\n", pc);
-	free(pc);
+	printf("book (1,3) : %i, %s\n", (bookshelf[1]+3)->number, (bookshelf[1]+3)->title);
+	printf("book (2,4) : %i, %s\n", bookshelf[2][4].number, bookshelf[2][4].title);
 	
+	for (i=0;i<3;i++)
+	  free(bookshelf[i]);
+	bookshelf = (struct Book**)malloc(3* sizeof (struct Book*));
+
 	return 0;
 }
